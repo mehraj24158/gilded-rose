@@ -2,7 +2,7 @@ class Item:
     """
     Implementation of generic item class
     """
-    def __init__(self, name = None, sell_in, quality):
+    def __init__(self, name, sell_in, quality):
         self.name = name
         self.sell_in = sell_in
         self.quality = quality
@@ -42,7 +42,7 @@ class ConjuredItem(Item):
 
 class LegendaryItem(Item):
     def __init__(self, name, sell_in=None, quality=None):
-        super(LegendaryItem, self).__init__(name, sell_in, quality):
+        super(LegendaryItem, self).__init__(name, sell_in, quality)
         self.sell_in = None
         self.quality = 80
         self.degradation_rate = 0
@@ -54,8 +54,8 @@ class LegendaryItem(Item):
         pass
 
 class BackStagePass(Item):
-    def __init__(self, name=None, sell_in, quality):
-        super(Item, self).__init__(self, name = None, sell_in, quality):
+    def __init__(self, name, sell_in, quality):
+        super(BackStagePass, self).__init__(name, sell_in, quality)
         self.modifed = False
         self.modifier = 0
 
@@ -91,9 +91,9 @@ class Inventory():
         for item in self.items:
             item.update()
 
-    def print_inventory(self):
+    def print_all(self):
         for item in self.items:
-            return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+            print( "%s, %s, %s" % (item.name, item.sell_in, item.quality))
     
 
 
