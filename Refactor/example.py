@@ -15,5 +15,3 @@ items = [
 inventory = Inventory(items)
 
 inventory.print_all()
-
-print("Hello world")
