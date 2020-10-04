@@ -48,3 +48,12 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+    def __eq__(self, other):
+        if isinstance(self, other.__class__):
+            for self_attribute, other_attribute in zip(vars(self), vars(other)):
+                if getattr(self, self_attribute) != getattr(other, other_attribute):
+                    return False
+            return True
+        else:
+            return False
