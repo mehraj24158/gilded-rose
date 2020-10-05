@@ -1,20 +1,19 @@
 import pytest
 from Refactor.gilded_rose import *
 
-
 """
 Global item list for testing. 
 """
-
 items = [
         Item(name="+5 Dexterity Vest", sell_in=10, quality=20),
-        BackStagePass(name="Aged Brie", sell_in=2, quality=0),
+        Aged(name="Aged Brie", sell_in=2, quality=0),
         Item(name="Elixir of the Mongoose", sell_in=5, quality=7),
         LegendaryItem(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
-        BackStagePass(name="Backstage pass 1", sell_in=15, quality=20),
-        BackStagePass(name="Backstage pass 2", sell_in=10, quality=27),
-        BackStagePass(name="Backstage pass 3", sell_in=5, quality=42),
-        BackStagePass(name="Backstage pass 4", sell_in=2, quality=49),
+        LegendaryItem(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=27),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=42),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=2, quality=49),
         ConjuredItem(name="Conjured Mana Cake", sell_in=3, quality=6),  
         ]
 
@@ -32,16 +31,25 @@ def test_equality(test_load):
     
 def test_print(test_load):
 # Ensures the Inventory __str__ method correctly prints all items within the inventory
-    assert str(test_load) == str(['+5 Dexterity Vest, 10, 20', 'Aged Brie, 2, 3', 'Elixir of the Mongoose, 5, 7', 'Sulfuras, Hand of Ragnaros, None, 80', 'Backstage pass 1, 15, 20', 'Backstage pass 2, 10, 29', 
-'Backstage pass 3, 5, 45', 'Backstage pass 4, 2, 50', 'Conjured Mana Cake, 3, 6'])
+    
+    assert str(test_load) == str(['+5 Dexterity Vest, 10, 20', 'Aged Brie, 2, 0', 'Elixir of the Mongoose, 5, 7', 
+    'Sulfuras, Hand of Ragnaros, 0, 80', 'Sulfuras, Hand of Ragnaros, -1, 80', 'Backstage passes to a TAFKAL80ETC concert, 15, 20',
+     'Backstage passes to a TAFKAL80ETC concert, 10, 27', 'Backstage passes to a TAFKAL80ETC concert, 5, 42', 
+     'Backstage passes to a TAFKAL80ETC concert, 2, 49', 'Conjured Mana Cake, 3, 6'])
 
 def test_update(test_load):
 # Ensures the update method updates the inventory correctly
-# Strings were utilized to easily access the getQuality method alongside other attributes
-# Essentially, Strings were easier to implement for the BackStageClass
     test_load.update()
-    
-    #print(test_load)
-    assert str(test_load) == str(['+5 Dexterity Vest, 9, 19', 'Aged Brie, 1, 3', 'Elixir of the Mongoose, 4, 6',
-                            'Sulfuras, Hand of Ragnaros, None, 80', 'Backstage pass 1, 14, 20', 'Backstage pass 2, 9, 29',
-                            'Backstage pass 3, 4, 45', 'Backstage pass 4, 1, 50', 'Conjured Mana Cake, 2, 4'])
+    new_items = [
+        Item(name="+5 Dexterity Vest", sell_in=9, quality=19),
+        Aged(name="Aged Brie", sell_in=1, quality=1),
+        Item(name="Elixir of the Mongoose", sell_in=4, quality=6),
+        LegendaryItem(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
+        LegendaryItem(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=14, quality=21),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=9, quality=29),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=4, quality=45),
+        BackStagePass(name="Backstage passes to a TAFKAL80ETC concert", sell_in=1, quality=50),
+        ConjuredItem(name="Conjured Mana Cake", sell_in=2, quality=4),  
+        ]
+    assert test_load.items == new_items
