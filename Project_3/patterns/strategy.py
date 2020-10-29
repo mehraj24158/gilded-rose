@@ -1,9 +1,19 @@
-class item_behavioral_interface():
-    pass
+import abc
 
-class Common():
+class item_behavioral_interface(metaclass = abc.ABCMeta):
+
+    @abc.abstractmethod
+    def bound():
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def update():
+        raise NotImplementedError
+
+
+class Common(item_behavioral_interface):
     def __init__(self):
-        self.type = "General Item"
+        self.type = "Common Item"
 
     def bound(self, quality):
         if quality > 50:

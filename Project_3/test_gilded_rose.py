@@ -1,8 +1,10 @@
 import pytest
+
 from Project_3.gilded_rose import *
 from Project_3.patterns.strategy import *
 from Project_3.patterns.observer import *
 from Project_3.patterns.decorator import *
+from Project_3.patterns.adapter import *
 
 """
 Global item list for testing. 
@@ -89,21 +91,41 @@ def test_seasons():
     item = Item(name="+5 Dexterity Vest", sell_in=10, quality=20, item_type=Common())
     fall = Fall()
     fall.register(item)
-    fall.update()
+    fall.notify()
     item.update()
     assert item.get_quality() == 24 and item.get_sell_in() == 12
     fall.unregister(item)
-    fall.update()
+    fall.notify()
     assert item.get_quality() == 19 and item.get_sell_in() == 9
 
 def test_decorator():
     item = Item(name="+5 Dexterity Vest", sell_in=10, quality=20, item_type=Common())
-    emerald = Gem(4, item)
+    emerald = Gem(quality=4, item=item)
     assert emerald.get_quality() == 24
-    ruby = Gem(7)
-    assert ruby.quality == 7
+    ruby = Gem(quality=7)
+    assert ruby.get_quality() == 7
+    ruby.wrap(item)
+    assert ruby.get_quality() == 27
+    item.update()
+    assert ruby.get_quality() == 26
+    unwrapped = ruby.unwrap()
+    assert unwrapped.get_quality() == 19
 
+def test_adapter():
+    french_item_adapter = French_adapter()
+    charles = French_client()
+    charles.le_set_article(french_item_adapter)
 
+    item = Item(name="+5 Dexterity Vest", sell_in=10, quality=20, item_type=Common())
+    french_item_adapter.adapt(item)
+    assert charles.avoir_nom() == "Gilet de Dextérité +5"
+    assert charles.avoir_vendre_dans() == 10
+    assert charles.avoir_qualite() == 20
 
+    item2 = Item(name="Sulfuras, Hand of Ragnaros", sell_in=15, quality=35, item_type=Common())
+    french_item_adapter.adapt(item2)
+    assert charles.avoir_nom() == "Sulfuras, Main de Ragnaros"
+    assert charles.avoir_vendre_dans() == 15
+    assert charles.avoir_qualite() == 35
 
 
