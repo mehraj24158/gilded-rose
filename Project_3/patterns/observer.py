@@ -1,6 +1,5 @@
 import abc
 from datetime import datetime
-
 class Observer_interface(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod

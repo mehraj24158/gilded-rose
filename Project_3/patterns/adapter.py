@@ -57,7 +57,7 @@ class French_client_interface(metaclass = abc.ABCMeta):
     def le_set_article(self):
         raise NotImplementedError
 
-class French_client():
+class French_client(French_client_interface):
     def __init__(self, article=None):
         self.article = article
 

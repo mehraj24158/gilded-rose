@@ -88,9 +88,10 @@ class Inventory_interface(metaclass = abc.ABCMeta):
         raise NotImplementedError
 
 class Inventory(Inventory_interface):
-    def __init__(self, items=None, seasons=None):
+    def __init__(self, items=None, seasons=None, cookies = 0):
         self.items = items
         self.seasons = seasons
+        self.expired = []
         
     def update(self):
         for item in self.items:
@@ -115,14 +116,3 @@ class Inventory(Inventory_interface):
             items.append(repr(item))
         
         return str(items)
-
-
-def factory():
-    def __init__(self):
-        pass
-
-    def create_default(self):
-        """
-        Create Inventory with season objects ready
-        """
-

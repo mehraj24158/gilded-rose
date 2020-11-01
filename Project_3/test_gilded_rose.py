@@ -5,6 +5,7 @@ from Project_3.patterns.strategy import *
 from Project_3.patterns.observer import *
 from Project_3.patterns.decorator import *
 from Project_3.patterns.adapter import *
+from Project_3.patterns.factory import *
 
 """
 Global item list for testing. 
@@ -128,4 +129,24 @@ def test_adapter():
     assert charles.avoir_vendre_dans() == 15
     assert charles.avoir_qualite() == 35
 
+def test_factory():
+    factory_one = Gift_basket_factory(name="Factory One")
+
+    items = [
+        Item(name="+5 Dexterity Vest", sell_in=9, quality=19, item_type=Common()),
+        Item(name="Aged Brie", sell_in=1, quality=1, item_type=Aged()),
+        Item(name="Elixir of the Mongoose", sell_in=4, quality=6, item_type=Common()),
+    ]
+
+    gift_basket = factory_one.create(items=items, total_quality = 200)
+    assert gift_basket.get_quality() == 200
+
+    for item in items:
+        assert item in gift_basket.items
+
+    gift_basket2 = factory_one.create(items=items, total_quality = 300)
+    assert gift_basket2.get_quality() == 300
+
+    gift_basket3 = factory_one.create(items=items, total_quality = 1000)
+    assert gift_basket3.get_quality() == 1000
 

@@ -1,44 +1,26 @@
 import abc
 from Project_3.gilded_rose import Inventory
+from Project_3.patterns.decorator import *
 from Project_3.patterns.observer import *
-
-
-class Factory_interface(metaclass = abc.ABCMeta):
+class Gift_basket_factory_interface(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod
-    def create_empty(self):
+    def create(self):
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def create_filled(self, item):
-        raise NotImplementedError
+class Gift_basket_factory(Gift_basket_factory_interface):
 
+    def __init__(self, name=None):
+        self.name = name
 
-class Inventory_factory(Factory_interface):
-    """
-    Creates several types of inventories with all 4 seasons instantiated
-    """
-
-    def __init__(self, name):
-        self.name
-
-    def create_empty(self)
-        winter = Winter()
-        spring = Spring() 
-        summer = Summer()
-        fall = Fall()
-        seasons = [winter, spring, summer, fall]
-        inventory = Inventory(items=None, seasons=seasons)
-        return inventory
-
-    def create_filled(self, items)
-        winter = Winter()
-        spring = Spring() 
-        summer = Summer()
-        fall = Fall()
-        seasons = [winter, spring, summer, fall]
-        inventory = Inventory(items=items, seasons=seasons)
-        return inventory
-
-
-
+    def create(self, items, total_quality):
+        items_quality = 0
+        for item in items:
+            items_quality += item.get_quality()
+        
+        if items_quality >= total_quality:
+            raise AssertionError("Cannot have items with quality greater than desired quality")
+            return items
+        else:
+            gift_basket = Gift_basket_wrapper(items=items, quality = total_quality-items_quality)
+            return gift_basket

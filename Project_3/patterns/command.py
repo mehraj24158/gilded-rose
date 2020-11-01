@@ -1,30 +1,60 @@
 import abc
-
-
-class Decorator_interface(metaclass = abc.ABCMeta):
+class Command_interface(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod
-    def wrap(self, item):
+    def execute(self, item):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def unwrap(self, item):
+    def undo(self, item):
         raise NotImplementedError
 
-class Gem(Decorator_interface):
-    def __init__(self, quality, item = None, name = None):
-        self.item = item
-        self._quality = quality
-        self.name = name
+    @abc.abstractmethod
+    def log(self, item):
+        raise NotImplementedError
 
-    def get_quality(self):
-        if self.item is None:
-            return self._quality
+class Invoker_interface(metaclass = abc.ABCMeta):
+
+    @abc.abstractmethod
+    def execute(self, item):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def undo(self, item):
+        raise NotImplementedError
+
+class get_item(Command_interface):
+    def __init__(self, inventory = None):
+        self.inventory = inventory
+
+    def execute(self, item):
+        if item in self.inventory:
+            return self.inventory.pop(item)
         else:
-            return self._quality + self.item.get_quality()
+            raise AssertionError(" Item not present in inventory")
+        
+    def undo(self, item)
 
-    def wrap(self, item):
-        self.item = item
+class clean(Command_interface):
+    def __init__(self, inventory = None):
+        self.inventory = inventory
+    
+    def execute(self):
+        for item in self.inventory:
+            if item.sell_in <= 0:
+                self.inventory.garbage.append(self.inventory.pop(item))
 
-    def unwrap(self):
-        return self.item
+class Robot(Invoker_interface):
+
+    def __init__(self):
+        self.name
+        self.command
+
+    def execute(self):
+        self.command.execute()
+
+    def undo(self):
+        self.command.undo()
+
+    def log(self):
+        self.command.log()

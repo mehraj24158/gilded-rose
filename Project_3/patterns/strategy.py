@@ -1,5 +1,4 @@
 import abc
-
 class item_behavioral_interface(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod
@@ -9,7 +8,6 @@ class item_behavioral_interface(metaclass = abc.ABCMeta):
     @abc.abstractmethod
     def update():
         raise NotImplementedError
-
 
 class Common(item_behavioral_interface):
     def __init__(self):
