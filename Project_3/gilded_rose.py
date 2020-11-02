@@ -79,32 +79,14 @@ class Inventory_interface(metaclass = abc.ABCMeta):
     def update(self):
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def clean(self):
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def clean_update(self):
-        raise NotImplementedError
-
 class Inventory(Inventory_interface):
     def __init__(self, items=None, seasons=None, cookies = 0):
         self.items = items
         self.seasons = seasons
-        self.expired = []
         
     def update(self):
         for item in self.items:
             item.update()
-
-    def clean(self):
-        for item in self.items:
-            if item.get_sell_in <= 0:
-                self.item.remove(item)
-
-    def clean_update(self):
-        self.update()
-        self.clean()
         
     def print_all(self):
         for item in self.items:
@@ -114,5 +96,4 @@ class Inventory(Inventory_interface):
         items = []
         for item in self.items:
             items.append(repr(item))
-        
         return str(items)
