@@ -74,7 +74,7 @@ class BackStagePass(Item):
             self.quality += 2
         if self.sell_in > 10:
             self.quality += 1
-
+            
         self.bounds()
 
 class Inventory():
