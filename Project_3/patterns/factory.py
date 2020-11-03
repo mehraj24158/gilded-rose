@@ -1,7 +1,6 @@
 import abc
 from Project_3.gilded_rose import Inventory
 from Project_3.patterns.decorator import *
-from Project_3.patterns.observer import *
 class Gift_basket_factory_interface(metaclass = abc.ABCMeta):
 
     @abc.abstractmethod

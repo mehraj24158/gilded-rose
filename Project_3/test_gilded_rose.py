@@ -1,5 +1,4 @@
 import pytest
-
 from Project_3.gilded_rose import *
 from Project_3.patterns.strategy import *
 from Project_3.patterns.observer import *
